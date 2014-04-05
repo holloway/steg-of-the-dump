@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <!-- cargo cult design lol -->
+	<title>Twitter Secret Messages</title>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+	<script src="jquery-1.11.0.min.js"></script>
+	<script src="steg-of-the-dump.js"></script>
+	<link rel="stylesheet" type="text/css" href="screen.css">
+</head>
+<body>
+	<h1>Twitter Secret Messages</h1>
+	<p>Hide messages in your tweets.</p>
+	<!--<p><label><input id="enforce_twitter_text_limit" checked type="checkbox">Enforce Twitter text limit</label></p>-->
+	<h2>Encode</h2>
+	<div id="encode" class="row">
+		<fieldset>
+			<legend>Innocuous Tweet</legend>
+			<textarea id="encode_tweet">i had a great day at the beach! #sunshine</textarea>
+		</fieldset>
+
+		<fieldset>
+			<legend>Hidden Message</legend>
+			<textarea id="encode_secret">kidnapped http://tinyurl.com/kukekaa</textarea>
+		</fieldset><!-- kidnapped http://tinyurl.com/kukekaa -->
+		<fieldset>
+			<legend>Tweet to post <span id="tweet_length"></span></legend>
+			<textarea id="encode_result" readonly></textarea>
+		</fieldset>
+	</div>
+	<h2>Decode</h2>
+	<div id="decode" class="row">
+		<fieldset>
+			<legend>Tweet</legend>
+			<textarea id="decode_tweet"></textarea>
+		</fieldset>
+		<fieldset>
+			<legend>Hidden Message</legend>
+			<textarea id="decode_secret" readonly></textarea>
+		</fieldset>
+	</div>
+
+	<h2>How does this work?</h2>
+	<p>Unicode homoglyphs are used to hide information in similar looking characters. A <span id="secret_alphabet_bitlength"></span>-bit character set is used for the hidden message. The hidden message may only contain these characters: <span id="valid_hidden_message_characters"></span></p>
+
+	<footer>
+		<h2>Source Code</h2>
+		<p><a href="https://github.com/holloway/steg-of-the-dump">available on Github</a></p>
+	</footer>
+</body>
+</html>

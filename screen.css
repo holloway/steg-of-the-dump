@@ -1,0 +1,58 @@
+html {
+    font-family: 'Raleway', Ubuntu,sans-serif;
+}
+
+h1 {
+	padding-top:1em;
+	margin-top:0em;
+	padding-left:0.4em;
+}
+
+h2 {
+	padding-top:1em;
+	margin-top:1em;
+	padding-left:0.7em;
+	border-top: solid 1px #eeeeee;
+}
+
+p {
+	padding-left: 1em;
+}
+
+#encode fieldset {
+	width:30%;
+	display:inline-block;
+}
+
+#decode fieldset {
+	width:47%;
+	display:inline-block;
+}
+
+fieldset {
+	border: solid 1px #cccccc;
+}
+
+textarea {
+	width: 100%;
+	height:4em;
+	resize: none;
+	border: none;
+}
+
+footer {
+	margin-top:100px;
+	border-top: solid 1px #ccc;
+	padding:1em;
+	color: #666;
+}
+
+footer h2,
+footer p {
+	font-size:inherit;
+	display:inline;
+}
+
+footer a {
+	color: #666;
+}
