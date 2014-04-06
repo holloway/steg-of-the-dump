@@ -36,7 +36,7 @@
 		},
 		encode_update = function(){
 			var tweet = $encode_tweet.val(),
-				secret = $encode_secret.val().toLowerCase(),
+				secret = $encode_secret.val().toLowerCase() + " ",
 				secret_binary = "",
 				character,
 				character_code_in_decimal,
@@ -51,7 +51,7 @@
 				secret_binary_to_encode_in_decimal,
 				i;
 
-			if(tweet.length < maxlength) {
+			if(tweet.length < maxlength && maxlength - tweet.length > 0) {
 				tweet += new Array(maxlength - tweet.length).join(" ");
 			}
 
@@ -69,8 +69,8 @@
 				}
 			}
 
-			secret_binary += zeropad("0", secret_alphabet_bitlength - (secret_binary % secret_alphabet_bitlength))
-
+			secret_binary = ensure_secret_binary_divisible_by_alphabet_bitlength(secret_binary);
+			
 			for(i = 0; i < tweet.length; i++){
 				character = tweet[i];
 				homoglyph = homoglyphs[character];
@@ -89,11 +89,16 @@
 				}
 				result += character;
 			}
-			//result = $.trim(result); //this might corrupt last character? TODO: investigate
 			$encode_result.val(result);
 			$tweet_length.text(" (length: " + result.length + ")");
 			$decode_tweet.val(result);
 			decode_update();
+		},
+		ensure_secret_binary_divisible_by_alphabet_bitlength = function(secret_binary){
+			if(secret_binary % secret_alphabet_bitlength > 0) {
+				secret_binary += zeropad("0", secret_alphabet_bitlength - (secret_binary % secret_alphabet_bitlength));
+			}
+			return secret_binary;
 		},
 		set_to_lowercase = function(){
 			$(this).val($(this).val().toLowerCase());
@@ -125,6 +130,10 @@
 					secret_binary += homoglyphs_lookup[character];
 				}
 			}
+
+			secret_binary = ensure_secret_binary_divisible_by_alphabet_bitlength(secret_binary);
+
+
 			//console.log(secret_binary);
 
 			while(secret_binary.length > 0){
@@ -150,7 +159,7 @@
 			return (new Array(length).join("0") + value).substr(-length, length);
 		},
 		editing_keys = [8, 46], // backspace, delete etc
-		secret_alphabet_string = " abcdefghijklmnopqrstuvwxyz1234567890.:/\\%-_?&;",
+		secret_alphabet_string = " abcdefghijklmnopqrstuvwxyz123456789'0.:/\\%-_?&;",
 		secret_alphabet = secret_alphabet_string.split(""),
 		secret_alphabet_bitlength,
 		homoglyphs_lookup,

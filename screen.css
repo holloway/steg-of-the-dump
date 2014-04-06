@@ -2,6 +2,10 @@ html {
     font-family: 'Raleway', Ubuntu,sans-serif;
 }
 
+body {
+	background: #eeeeee;
+}
+
 h1 {
 	padding-top:1em;
 	margin-top:0em;
@@ -12,7 +16,6 @@ h2 {
 	padding-top:1em;
 	margin-top:1em;
 	padding-left:0.7em;
-	border-top: solid 1px #eeeeee;
 }
 
 p {
@@ -31,6 +34,7 @@ p {
 
 fieldset {
 	border: solid 1px #cccccc;
+	background: white;
 }
 
 textarea {
@@ -42,15 +46,15 @@ textarea {
 
 footer {
 	margin-top:100px;
-	border-top: solid 1px #ccc;
-	padding:1em;
+	border-top: solid 1px #ddd;
+	padding:0.5em 0px 1em 0px;
 	color: #666;
 }
 
-footer h2,
+
 footer p {
-	font-size:inherit;
-	display:inline;
+	font-size:small;
+	padding-left:1em;
 }
 
 footer a {
