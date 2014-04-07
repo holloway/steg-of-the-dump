@@ -6,6 +6,17 @@
 	<script src="jquery-1.11.0.min.js"></script>
 	<script src="steg-of-the-dump.js"></script>
 	<link rel="stylesheet" type="text/css" href="screen.css">
+	<script>
+		$(document).ready(function(){
+			"use strict";
+
+			$("#techyreasoning").click(function(event){
+				var $this = $(this);
+				$this.replaceWith($this.attr("data-reasoning"));
+				event.preventDefault();
+			})
+		})
+	</script>
 </head>
 <body>
 	<h1>Twitter Secret Messages</h1>
@@ -14,8 +25,8 @@
 	<h2>Encode</h2>
 	<div id="encode" class="row">
 		<fieldset>
-			<legend>Innocuous Tweet</legend>
-			<textarea id="encode_tweet">i had a great day at the beach! #sunshine</textarea>
+			<legend>Tweet</legend>
+			<textarea id="encode_tweet">i had a great day at the beach! #sunshine       </textarea>
 		</fieldset>
 
 		<fieldset>
@@ -39,22 +50,25 @@
 		</fieldset>
 	</div>
 
-	<h2>Help</h2>
-	<p>
-		How does this work? Unicode homoglyphs (similar looking letters) are used to hide your message.
-	</p>
-	<p>	Your hidden message may only contain these characters: <span id="valid_hidden_message_characters"></span> (<span id="secret_alphabet_bitlength"></span>-bit charset)
-	</p>
-	<p>	If you can't decode your message check that you copied it correctly, and that you didn't copy any extra characters or spaces etc.</p>
-	</p>
-	<p> This is not encryption software. Anyone who knows to look for your message can find it. It's more like <tt>&lt;!-- hidden comments --&gt;</tt>.
-	</p>
-	<p>
-	 	This software works, but you might see a mangled message or two until I learn which characters Twitter filters/converts. You can also use this for any text (emails, G+, Facebook).
-	</p>
+	<h2>FAQ</h2>
+	<h3>How does this work?</h3>
+	<p>The letters of your tweet are replaced with similar looking letters (Unicode homoglyphs) that are used to hide your hidden message.</p>
+	<h3>Hidden messages? But that will mean people on Twitter can be duplicitous and two-faced!</h3>
+	<p>I know, groundbreaking stuff.</p>
+	<h3>So this is encryption?</h3>
+	<p>Not really, because anyone who knows to look for your message can find it. It's more like writing <tt>&lt;!-- hidden comments --&gt;</tt>.</p>
+	<h3>I can use this for any text?</h3>
+	<p>Sort of. If nothing corrupts the text it will work, and it should work on Twitter and in emails. Facebook will probably corrupt the text however.</p>
+	<h3>I can't write some characters into the hidden message</h3>
+	<p>Your hidden message may only contain these characters: <span id="valid_hidden_message_characters"></span> (<span class="secret_alphabet_bitlength"></span>-bit charset). This is done so that we can store more hidden messages. Include an url if you want more (it will need to be all lowercase so use a service like <a href="http://tinyurl.com">tinyurl.com</a> or a URL shortener that allows you to provide a custom, lowercase url)</p>
+	<h3>My tweet doesn't work / it's corrupt</h3>
+	<p>If you can't decode your message check that you copied it correctly from the start to the end, and that you didn't copy any extra characters.</p>
+	<p>Next, if entire tweet is still corrupt then you can try manually recovering it. I know this is annoying but there are technical reasons why this is the case <a href="#" id="techyreasoning" data-reasoning=". With only 140 chars there's no space for error-correction, and even a parity-bit would just identify corruption it wouldn't help people recover it, so I don't consider the overhead of error correction to be appropriate. Anyway, getting back to recovering that text...">(for techy reasoning - click here)</a>.
+
+	To attempt to recover the tweet first try adding spaces at the beginning of the tweet. This will help realign the <span class="secret_alphabet_bitlength"></span>-bit boundary. If the tweet is only corrupt in the middle then try adding spaces to that area of the tweet. Good luck!</p>
 
 	<footer>
-		<p>Version 0.1. (<a href="https://github.com/holloway/steg-of-the-dump">Source</a>)</p>
+		<p>Version 0.2. (<a href="https://github.com/holloway/steg-of-the-dump">Source</a>)</p>
 		<p><a href="http://holloway.co.nz/">Holloway.co.nz homepage</p>
 	</footer>
 </body>

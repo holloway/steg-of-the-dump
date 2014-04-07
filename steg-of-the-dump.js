@@ -19,7 +19,7 @@
 			decode_update();
 
 			$("#valid_hidden_message_characters").text(secret_alphabet_string);
-			$("#secret_alphabet_bitlength").text(secret_alphabet_bitlength);
+			$(".secret_alphabet_bitlength").text(secret_alphabet_bitlength);
 		},
 		encode_tweet_update = function(){
 			encode_update();
