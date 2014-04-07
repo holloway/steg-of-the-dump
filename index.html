@@ -25,18 +25,19 @@
 	<h2>Encode</h2>
 	<div id="encode" class="row">
 		<fieldset>
-			<legend>Tweet</legend>
-			<textarea id="encode_tweet">i had a great day at the beach! #sunshine       </textarea>
+			<legend>Tweet <span id="hidden_length"></span></legend>
+			<textarea id="encode_tweet">i had a great day at the beach! #sunshine                </textarea>
 		</fieldset>
 
 		<fieldset>
-			<legend>Hidden Message</legend>
+			<legend>Hidden Message <span id="hidden_message_length"></span></legend>
 			<textarea id="encode_secret">kidnapped by pirates</textarea>
 		</fieldset><!-- kidnapped http://tinyurl.com/kukekaa -->
 		<fieldset>
 			<legend>Tweet to post <span id="tweet_length" title="Tweet may have extra "></span></legend>
 			<textarea id="encode_result" readonly></textarea>
 		</fieldset>
+		<p id="encode_result_status">Warning: Not all of Hidden Message stored in tweet. Add more text (e.g. spaces) to Tweet, or reduce text in Hidden Message.</p>
 	</div>
 	<h2>Decode</h2>
 	<div id="decode" class="row">
@@ -50,7 +51,7 @@
 		</fieldset>
 	</div>
 
-	<h2>FAQ</h2>
+	<h2><abbr title="Frequently Asked Questions">FAQ</abbr></h2>
 	<h3>How does this work?</h3>
 	<p>The letters of your tweet are replaced with similar looking letters (Unicode homoglyphs) that are used to hide your hidden message.</p>
 	<h3>Hidden messages? But that will mean people on Twitter can be duplicitous and two-faced!</h3>
@@ -60,12 +61,13 @@
 	<h3>I can use this for any text?</h3>
 	<p>Sort of. If nothing corrupts the text it will work, and it should work on Twitter and in emails. Facebook will probably corrupt the text however.</p>
 	<h3>I can't write some characters into the hidden message</h3>
-	<p>Your hidden message may only contain these characters: <span id="valid_hidden_message_characters"></span> (<span class="secret_alphabet_bitlength"></span>-bit charset). This is done so that we can store more hidden messages. Include an url if you want more (it will need to be all lowercase so use a service like <a href="http://tinyurl.com">tinyurl.com</a> or a URL shortener that allows you to provide a custom, lowercase url)</p>
+	<p>Your hidden message may only contain these characters: <span id="valid_hidden_message_characters"></span> (<span class="secret_alphabet_bitlength"></span>-bit charset). This is done so that we can store more hidden messages.</p>
+	<p>If you want more text then perhaps include a lowercase url (e.g. from <a href="http://tinyurl.com">tinyurl.com</a>)</p>
 	<h3>My tweet doesn't work / it's corrupt</h3>
 	<p>If you can't decode your message check that you copied it correctly from the start to the end, and that you didn't copy any extra characters.</p>
-	<p>Next, if entire tweet is still corrupt then you can try manually recovering it. I know this is annoying but there are technical reasons why this is the case <a href="#" id="techyreasoning" data-reasoning=". With only 140 chars there's no space for error-correction, and even a parity-bit would just identify corruption it wouldn't help people recover it, so I don't consider the overhead of error correction to be appropriate. Anyway, getting back to recovering that text...">(for techy reasoning - click here)</a>.
+	<p>Next, if entire tweet is still corrupt then you can try manually recovering it. I know this is annoying but there are technical reasons why this is the case <a href="#" id="techyreasoning" data-reasoning=". With only 140 chars there's no space for error-correction, and even a parity-bit would just identify corruption -- it wouldn't help people recover it, so I don't consider the overhead of error correction/parity to be appropriate. I understand this debatable however so please feel free to fork the code and make your changes. Anyway, getting back to recovering that text...">(for techy reasoning - click here)</a>.</p>
 
-	To attempt to recover the tweet first try adding spaces at the beginning of the tweet. This will help realign the <span class="secret_alphabet_bitlength"></span>-bit boundary. If the tweet is only corrupt in the middle then try adding spaces to that area of the tweet. Good luck!</p>
+	<p>To attempt to recover the tweet first try adding spaces at the beginning of the tweet. This will help realign the <span class="secret_alphabet_bitlength"></span>-bit boundary. If the tweet is only corrupt in the middle then try adding spaces to that area of the tweet. Good luck!</p>
 
 	<footer>
 		<p>Version 0.2. (<a href="https://github.com/holloway/steg-of-the-dump">Source</a>)</p>

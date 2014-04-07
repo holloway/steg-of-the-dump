@@ -16,6 +16,7 @@ h2 {
 	padding-top:1em;
 	margin-top:1em;
 	padding-left:0.7em;
+	clear:left;
 }
 
 h3 {
@@ -36,10 +37,28 @@ p {
 	display:inline-block;
 }
 
+
+#encode_result_status {
+	display:none;
+	background: #ffeeee;
+	font-size:small;
+	font-weight:bold;
+	width:31%;
+	float:right;
+	margin-right:5%;
+}
+
+
 fieldset {
 	border: solid 1px #cccccc;
 	background: white;
 }
+
+fieldset.unable-to-cover-text,
+fieldset.unable-to-cover-text textarea {
+	background: #ffeeee;
+}
+
 
 textarea {
 	width: 100%;

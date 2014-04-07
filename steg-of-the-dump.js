@@ -1,7 +1,7 @@
 (function($){
 	"use strict";
 
-	var $encode_tweet, $encode_secret, $encode_result, $tweet_length,
+	var $encode_tweet, $encode_secret, $encode_result, $tweet_length, $encode_result_status, $hidden_length, $hidden_message_length,
 		$decode_tweet, $decode_secret,
 		maxlength = 140,
 
@@ -12,6 +12,9 @@
 			$decode_tweet  = $("#decode_tweet") .keyup(decode_update).change(decode_update);
 			$decode_secret = $("#decode_secret").focus(only_allow_selection);
 			$tweet_length  = $("#tweet_length");
+			$hidden_length = $("#hidden_length");
+			$hidden_message_length = $("#hidden_message_length");
+			$encode_result_status = $("#encode_result_status");
 			secret_alphabet_bitlength = secret_alphabet.length.toString(2).length;
 			update_homoglyph_lookup();
 			encode_update();
@@ -49,11 +52,12 @@
 				homoglyph_options_bitlength,
 				secret_binary_to_encode,
 				secret_binary_to_encode_in_decimal,
+				tweet_covertext_chars = 0,
 				i;
 
-			if(tweet.length < maxlength && maxlength - tweet.length > 0) {
-				tweet += new Array(maxlength - tweet.length).join(" ");
-			}
+			//if(tweet.length < maxlength && maxlength - tweet.length > 0) {
+			//	tweet += new Array(maxlength - tweet.length).join(" ");
+			//}
 
 			for(i = 0; i < secret.length; i++){
 				character = secret[i];
@@ -74,24 +78,40 @@
 			for(i = 0; i < tweet.length; i++){
 				character = tweet[i];
 				homoglyph = homoglyphs[character];
-				if(homoglyph !== undefined && secret_binary.length > 0){
+				if(homoglyph !== undefined){
 					homoglyph_options = homoglyph.slice(0);
 					homoglyph_options_bitlength = (homoglyph_options.length + 1).toString(2).length - 1;
-					secret_binary_to_encode = secret_binary.substr(0, homoglyph_options_bitlength);
-					secret_binary = secret_binary.substr(homoglyph_options_bitlength);	
-					secret_binary_to_encode_in_decimal = parseInt(secret_binary_to_encode, 2);
-					if(secret_binary_to_encode_in_decimal > 0) {
-						character_code_in_hexadecimal = homoglyph_options[secret_binary_to_encode_in_decimal - 1];
-						character_code_in_decimal = parseInt(character_code_in_hexadecimal, 16);
-						character = String.fromCharCode(character_code_in_decimal);
+					tweet_covertext_chars += homoglyph_options_bitlength;
+					if(secret_binary.length > 0){
+						secret_binary_to_encode = secret_binary.substr(0, homoglyph_options_bitlength);
+						//if(secret_binary_to_encode.length < secret_alphabet_bitlength) {
+						//	secret_binary_to_encode = zeropad(secret_binary_to_encode, secret_alphabet_bitlength);
+						//}
+						secret_binary = secret_binary.substr(homoglyph_options_bitlength);	
+						secret_binary_to_encode_in_decimal = parseInt(secret_binary_to_encode, 2);
+						if(secret_binary_to_encode_in_decimal > 0) {
+							character_code_in_hexadecimal = homoglyph_options[secret_binary_to_encode_in_decimal - 1];
+							character_code_in_decimal = parseInt(character_code_in_hexadecimal, 16);
+							character = String.fromCharCode(character_code_in_decimal);
+						}
+						//console.log("Encoding ", secret_binary_to_encode, " by making ", tweet[i], "(" + tweet.charCodeAt(i) + ") into ", character + " (" + character.charCodeAt(0) + ").", homoglyph_options);
 					}
-					//console.log("Encoding ", secret_binary_to_encode, " by making ", tweet[i], "(" + tweet.charCodeAt(i) + ") into ", character + " (" + character.charCodeAt(0) + ").", homoglyph_options);
 				}
 				result += character;
 			}
+
+			if(secret_binary.length > 0) {
+				$encode_result.parent().addClass("unable-to-cover-text");
+				$encode_result_status.show();
+			} else {
+				$encode_result.parent().removeClass("unable-to-cover-text");
+				$encode_result_status.hide();
+			}
 			$encode_result.val(result);
-			$tweet_length.text(" (length: " + result.length + ")");
 			$decode_tweet.val(result);
+			$tweet_length.text(" (length: " + result.length + ")");
+			$hidden_message_length.text(" (length: " + secret.length + ")")
+			$hidden_length.text(" (allows Hidden Message length " + Math.ceil(tweet_covertext_chars / secret_alphabet_bitlength) + ")");
 			decode_update();
 		},
 		ensure_secret_binary_divisible_by_alphabet_bitlength = function(secret_binary){
@@ -277,7 +297,7 @@
 			"|":["FF5C"],
 			"}":["FF5D"],
 			"~":["FF5E"],
-			" ":["00A0","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","200A","2028","2029","202F","205F","3000"]
+			" ":["2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","200A","2028","2029","202F","205F"]
 		};
 
 	$(document).ready(init);
